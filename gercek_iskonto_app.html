@@ -407,19 +407,59 @@ function uid() {
 // gosterir ve hesaplamalarda gercek deger (40000) kullanilir.
 function attachThousandInput(id, onChangeCb) {
   const el = document.getElementById(id);
+  el.dataset.typed = "";
   el.dataset.rawvalue = "";
-  el.addEventListener("input", () => {
-    const digits = el.value.replace(/\D/g, "");
-    if (digits === "") {
-      el.dataset.rawvalue = "";
+
+  function render() {
+    const typed = el.dataset.typed;
+    if (typed === "") {
       el.value = "";
+      el.dataset.rawvalue = "";
     } else {
-      const num = parseInt(digits, 10) * 1000;
+      const num = parseInt(typed, 10) * 1000;
       el.dataset.rawvalue = String(num);
       el.value = num.toLocaleString("tr-TR");
     }
     onChangeCb();
+  }
+
+  // We own the rendering entirely from el.dataset.typed (the digits the
+  // person actually typed, BEFORE the x1000). We never re-read the
+  // already-formatted el.value back in, which is what caused the
+  // compounding bug (each keystroke re-multiplying an already-multiplied
+  // number) and the reversed backspace behaviour.
+  el.addEventListener("beforeinput", (e) => {
+    e.preventDefault();
+    if (e.inputType === "insertText" && e.data) {
+      const digits = e.data.replace(/\D/g, "");
+      if (digits) {
+        el.dataset.typed = (el.dataset.typed + digits).slice(0, 9);
+        render();
+      }
+    } else if (e.inputType === "deleteContentBackward" || e.inputType === "deleteContentForward") {
+      el.dataset.typed = el.dataset.typed.slice(0, -1);
+      render();
+    } else if (e.inputType === "insertFromPaste") {
+      const text = (e.dataTransfer || window.clipboardData) ? (e.dataTransfer ? e.dataTransfer.getData("text") : "") : "";
+      const digits = (e.data || text || "").replace(/\D/g, "");
+      if (digits) {
+        el.dataset.typed = (el.dataset.typed + digits).slice(0, 9);
+        render();
+      }
+    }
   });
+  // Fallback for paste when beforeinput doesn't carry data (some browsers)
+  el.addEventListener("paste", (e) => {
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    const digits = text.replace(/\D/g, "");
+    if (digits) {
+      e.preventDefault();
+      el.dataset.typed = (el.dataset.typed + digits).slice(0, 9);
+      render();
+    }
+  });
+
+  render();
 }
 function getThousandValue(id) {
   const el = document.getElementById(id);
