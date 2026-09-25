@@ -234,14 +234,34 @@
         <input type="number" id="u_iskonto" placeholder="örn. 57">
       </div>
 
-      <h3>Hediye Ürün</h3>
+      <h3>Hediye Ürün 1</h3>
       <div class="field">
         <label>Ürün Seç</label>
-        <select id="u_urun"><option value="">— Seçilmedi —</option></select>
+        <select id="u_urun1"><option value="">— Seçilmedi —</option></select>
       </div>
       <div class="field">
         <label>Adet</label>
-        <input type="number" step="0.01" id="u_adet" placeholder="örn. 24">
+        <input type="number" step="0.01" id="u_adet1" placeholder="örn. 24">
+      </div>
+
+      <h3>Hediye Ürün 2</h3>
+      <div class="field">
+        <label>Ürün Seç</label>
+        <select id="u_urun2"><option value="">— Seçilmedi —</option></select>
+      </div>
+      <div class="field">
+        <label>Adet</label>
+        <input type="number" step="0.01" id="u_adet2" placeholder="örn. 12">
+      </div>
+
+      <h3>Hediye Ürün 3</h3>
+      <div class="field">
+        <label>Ürün Seç</label>
+        <select id="u_urun3"><option value="">— Seçilmedi —</option></select>
+      </div>
+      <div class="field">
+        <label>Adet</label>
+        <input type="number" step="0.01" id="u_adet3" placeholder="örn. 6">
       </div>
 
       <h3>Hediye Puan</h3>
@@ -293,14 +313,34 @@
         <select id="m_makine"><option value="">— Seçilmedi —</option></select>
       </div>
 
-      <h3>Ek Hediye (isteğe bağlı)</h3>
+      <h3>Ek Hediye 1 (isteğe bağlı)</h3>
       <div class="field">
         <label>Hediye Ürün</label>
-        <select id="m_urun"><option value="">— Seçilmedi —</option></select>
+        <select id="m_urun1"><option value="">— Seçilmedi —</option></select>
       </div>
       <div class="field">
         <label>Adet</label>
-        <input type="number" step="0.01" id="m_adet" placeholder="örn. 20">
+        <input type="number" step="0.01" id="m_adet1" placeholder="örn. 20">
+      </div>
+
+      <h3>Ek Hediye 2 (isteğe bağlı)</h3>
+      <div class="field">
+        <label>Hediye Ürün</label>
+        <select id="m_urun2"><option value="">— Seçilmedi —</option></select>
+      </div>
+      <div class="field">
+        <label>Adet</label>
+        <input type="number" step="0.01" id="m_adet2" placeholder="örn. 10">
+      </div>
+
+      <h3>Ek Hediye 3 (isteğe bağlı)</h3>
+      <div class="field">
+        <label>Hediye Ürün</label>
+        <select id="m_urun3"><option value="">— Seçilmedi —</option></select>
+      </div>
+      <div class="field">
+        <label>Adet</label>
+        <input type="number" step="0.01" id="m_adet3" placeholder="örn. 5">
       </div>
       <div class="field">
         <label>Hediye Puan (₺)</label>
@@ -357,21 +397,21 @@
 <script>
 let urunler = [];
 let makineler = [];
-const LS_URUN_KEY = "gia_urunler_v2";
+const LS_URUN_KEY = "gia_urunler_v3";
 const LS_MAKINE_KEY = "gia_makineler_v1";
 
 // Kapsamlı varsayılan listeler - herkes ayni sabit listeyle basliyor,
 // giris/senkronizasyon gerekmiyor (cihazin kendi hafizasinda tutulur).
 const DEFAULT_URUNLER = [
   { kategori: "Cam", ad: "Hawk Vista", fiyat: 439 },
-  { kategori: "Cam", ad: "Premium 1.50 Beyaz", fiyat: 1212 },
-  { kategori: "Cam", ad: "Premium 1.50 Hybrid", fiyat: 1436 },
-  { kategori: "Cam", ad: "Clarity 1.50 Beyaz", fiyat: 1660 },
-  { kategori: "Cam", ad: "Clarity 1.50 Hybrid", fiyat: 1796 },
-  { kategori: "Cam", ad: "Fuji Life 1.50 Beyaz", fiyat: 2470 },
-  { kategori: "Cam", ad: "Fuji Life 1.50 NeoChromes", fiyat: 3510 },
-  { kategori: "Cam", ad: "Fuji Adaptive 1.50 Beyaz", fiyat: 1820 },
-  { kategori: "Cam", ad: "Fuji Adaptive 1.50 NeoChromes", fiyat: 2860 },
+  { kategori: "Cam", ad: "Premium 1.50 Beyaz", fiyat: 1333 },
+  { kategori: "Cam", ad: "Premium 1.50 Hybrid", fiyat: 1580 },
+  { kategori: "Cam", ad: "Clarity 1.50 Beyaz", fiyat: 1826 },
+  { kategori: "Cam", ad: "Clarity 1.50 Hybrid", fiyat: 1976 },
+  { kategori: "Cam", ad: "Fuji Life 1.50 Beyaz", fiyat: 2717 },
+  { kategori: "Cam", ad: "Fuji Life 1.50 NeoChromes", fiyat: 3861 },
+  { kategori: "Cam", ad: "Fuji Adaptive 1.50 Beyaz", fiyat: 2002 },
+  { kategori: "Cam", ad: "Fuji Adaptive 1.50 NeoChromes", fiyat: 3146 },
   { kategori: "Cam", ad: "1.56 Hmc Paket", fiyat: 10725 },
   { kategori: "Cam", ad: "1.56 Blue Paket", fiyat: 21780 },
   { kategori: "Cam", ad: "Viola 1.56 Paket", fiyat: 45738 },
@@ -492,7 +532,10 @@ function loadLists() {
 }
 
 function renderDropdowns() {
-  const urunSelects = [document.getElementById("u_urun"), document.getElementById("m_urun")];
+  const urunSelects = [
+    document.getElementById("u_urun1"), document.getElementById("u_urun2"), document.getElementById("u_urun3"),
+    document.getElementById("m_urun1"), document.getElementById("m_urun2"), document.getElementById("m_urun3"),
+  ];
   urunSelects.forEach(sel => {
     const cur = sel.value;
     sel.innerHTML = '<option value="">— Seçilmedi —</option>' +
@@ -582,8 +625,6 @@ function calcUrun() {
   const aylik = getThousandValue("u_aylik");
   const ay = parseFloat(document.getElementById("u_ay").value) || 0;
   const iskontoPct = parseFloat(document.getElementById("u_iskonto").value);
-  const urunId = document.getElementById("u_urun").value;
-  const adet = parseFloat(document.getElementById("u_adet").value) || 0;
   const puan = getThousandValue("u_puan") || 0;
 
   const box = document.getElementById("u_result");
@@ -591,8 +632,13 @@ function calcUrun() {
 
   const toplam = aylik * ay;
   const iskonto = iskontoPct / 100;
-  const urun = urunler.find(p => p.id === urunId);
-  const urunDeger = urun ? adet * urun.fiyat : 0;
+  let urunDeger = 0;
+  [1, 2, 3].forEach(n => {
+    const urunId = document.getElementById(`u_urun${n}`).value;
+    const adet = parseFloat(document.getElementById(`u_adet${n}`).value) || 0;
+    const urun = urunler.find(p => p.id === urunId);
+    if (urun) urunDeger += adet * urun.fiyat;
+  });
   const hediyeDeger = urunDeger + puan;
   const liste = toplam / (1 - iskonto);
   const iskontoUrun = liste - toplam;
@@ -613,8 +659,6 @@ function calcMakine() {
   const iskontoPct = parseFloat(document.getElementById("m_iskonto").value);
   const sekil = document.getElementById("m_sekil").value;
   const makineId = document.getElementById("m_makine").value;
-  const urunId = document.getElementById("m_urun").value;
-  const adet = parseFloat(document.getElementById("m_adet").value) || 0;
   const puan = getThousandValue("m_puan") || 0;
 
   const box = document.getElementById("m_result");
@@ -627,8 +671,13 @@ function calcMakine() {
   if (makine) {
     makineTutari = sekil === "Yarı Ödemeli" ? makine.fiyat * 0.5 : makine.fiyat;
   }
-  const urun = urunler.find(p => p.id === urunId);
-  const urunDeger = urun ? adet * urun.fiyat : 0;
+  let urunDeger = 0;
+  [1, 2, 3].forEach(n => {
+    const urunId = document.getElementById(`m_urun${n}`).value;
+    const adet = parseFloat(document.getElementById(`m_adet${n}`).value) || 0;
+    const urun = urunler.find(p => p.id === urunId);
+    if (urun) urunDeger += adet * urun.fiyat;
+  });
   const hediyeDeger = makineTutari + urunDeger + puan;
   const liste = toplam / (1 - iskonto);
   const iskontoUrun = liste - toplam;
@@ -647,13 +696,13 @@ function calcMakine() {
 
 attachThousandInput("u_aylik", calcUrun);
 attachThousandInput("u_puan", calcUrun);
-["u_ay","u_iskonto","u_urun","u_adet"].forEach(id => {
+["u_ay","u_iskonto","u_urun1","u_adet1","u_urun2","u_adet2","u_urun3","u_adet3"].forEach(id => {
   document.getElementById(id).addEventListener("input", calcUrun);
   document.getElementById(id).addEventListener("change", calcUrun);
 });
 attachThousandInput("m_aylik", calcMakine);
 attachThousandInput("m_puan", calcMakine);
-["m_ay","m_iskonto","m_sekil","m_makine","m_urun","m_adet"].forEach(id => {
+["m_ay","m_iskonto","m_sekil","m_makine","m_urun1","m_adet1","m_urun2","m_adet2","m_urun3","m_adet3"].forEach(id => {
   document.getElementById(id).addEventListener("input", calcMakine);
   document.getElementById(id).addEventListener("change", calcMakine);
 });
