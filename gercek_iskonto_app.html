@@ -197,6 +197,20 @@
   .muted { color: var(--text-muted); font-size: 0.75rem; }
   .warn { color: var(--danger); font-size: 0.78rem; margin-top: 6px; }
   .empty-msg { color: var(--text-muted); font-size: 0.82rem; text-align: center; padding: 10px 0; }
+
+  input[type="checkbox"] {
+    width: 22px; height: 22px; padding: 0; margin: 0;
+    border: 0; background: transparent;
+    accent-color: var(--accent); flex-shrink: 0; cursor: pointer;
+  }
+  .chk { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text); cursor: pointer; }
+  .list-row.gizli .name, .list-row.gizli .price { opacity: 0.45; }
+  .grp-head { font-size: 0.75rem; font-weight: 700; color: var(--accent); margin: 14px 0 2px; padding-bottom: 4px; border-bottom: 2px solid var(--accent-light); }
+  .grp-head:first-child { margin-top: 4px; }
+  .slot-head { display: flex; align-items: center; justify-content: space-between; }
+  .slot-remove { background: none; border: none; color: var(--danger); font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 6px 0 6px 10px; }
+  .add-slot { width: 100%; margin: 4px 0 6px; }
+  optgroup { font-style: normal; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -244,25 +258,29 @@
         <input type="number" step="0.01" id="u_adet1" placeholder="örn. 24">
       </div>
 
-      <h3>Hediye Ürün 2</h3>
-      <div class="field">
-        <label>Ürün Seç</label>
-        <select id="u_urun2"><option value="">— Seçilmedi —</option></select>
+      <div class="slot" id="u_slot2" style="display:none;">
+        <div class="slot-head"><h3>Hediye Ürün 2</h3><button type="button" class="slot-remove">✕ Kaldır</button></div>
+        <div class="field">
+          <label>Ürün Seç</label>
+          <select id="u_urun2"><option value="">— Seçilmedi —</option></select>
+        </div>
+        <div class="field">
+          <label>Adet</label>
+          <input type="number" step="0.01" id="u_adet2" placeholder="örn. 12">
+        </div>
       </div>
-      <div class="field">
-        <label>Adet</label>
-        <input type="number" step="0.01" id="u_adet2" placeholder="örn. 12">
+      <div class="slot" id="u_slot3" style="display:none;">
+        <div class="slot-head"><h3>Hediye Ürün 3</h3><button type="button" class="slot-remove">✕ Kaldır</button></div>
+        <div class="field">
+          <label>Ürün Seç</label>
+          <select id="u_urun3"><option value="">— Seçilmedi —</option></select>
+        </div>
+        <div class="field">
+          <label>Adet</label>
+          <input type="number" step="0.01" id="u_adet3" placeholder="örn. 6">
+        </div>
       </div>
-
-      <h3>Hediye Ürün 3</h3>
-      <div class="field">
-        <label>Ürün Seç</label>
-        <select id="u_urun3"><option value="">— Seçilmedi —</option></select>
-      </div>
-      <div class="field">
-        <label>Adet</label>
-        <input type="number" step="0.01" id="u_adet3" placeholder="örn. 6">
-      </div>
+      <button type="button" class="btn secondary add-slot" id="u_add_slot">+ Hediye ürün ekle</button>
 
       <h3>Hediye Puan</h3>
       <div class="field">
@@ -323,25 +341,29 @@
         <input type="number" step="0.01" id="m_adet1" placeholder="örn. 20">
       </div>
 
-      <h3>Ek Hediye 2 (isteğe bağlı)</h3>
-      <div class="field">
-        <label>Hediye Ürün</label>
-        <select id="m_urun2"><option value="">— Seçilmedi —</option></select>
+      <div class="slot" id="m_slot2" style="display:none;">
+        <div class="slot-head"><h3>Ek Hediye 2 (isteğe bağlı)</h3><button type="button" class="slot-remove">✕ Kaldır</button></div>
+        <div class="field">
+          <label>Hediye Ürün</label>
+          <select id="m_urun2"><option value="">— Seçilmedi —</option></select>
+        </div>
+        <div class="field">
+          <label>Adet</label>
+          <input type="number" step="0.01" id="m_adet2" placeholder="örn. 10">
+        </div>
       </div>
-      <div class="field">
-        <label>Adet</label>
-        <input type="number" step="0.01" id="m_adet2" placeholder="örn. 10">
+      <div class="slot" id="m_slot3" style="display:none;">
+        <div class="slot-head"><h3>Ek Hediye 3 (isteğe bağlı)</h3><button type="button" class="slot-remove">✕ Kaldır</button></div>
+        <div class="field">
+          <label>Hediye Ürün</label>
+          <select id="m_urun3"><option value="">— Seçilmedi —</option></select>
+        </div>
+        <div class="field">
+          <label>Adet</label>
+          <input type="number" step="0.01" id="m_adet3" placeholder="örn. 5">
+        </div>
       </div>
-
-      <h3>Ek Hediye 3 (isteğe bağlı)</h3>
-      <div class="field">
-        <label>Hediye Ürün</label>
-        <select id="m_urun3"><option value="">— Seçilmedi —</option></select>
-      </div>
-      <div class="field">
-        <label>Adet</label>
-        <input type="number" step="0.01" id="m_adet3" placeholder="örn. 5">
-      </div>
+      <button type="button" class="btn secondary add-slot" id="m_add_slot">+ Hediye ürün ekle</button>
       <div class="field">
         <label>Hediye Puan (₺)</label>
         <input type="text" inputmode="numeric" id="m_puan" placeholder="örn. 15 → 15.000 ₺">
@@ -365,19 +387,21 @@
   <!-- ================= LISTELER ================= -->
   <div class="panel" id="panel-listeler">
     <div class="card">
-      <p class="muted" style="margin-top:0;">Bu listeler cihazında saklanır, giriş gerekmez. Zaten kapsamlı bir varsayılan listeyle geliyor; istersen ekleyip çıkarabilirsin, ama başka bir cihazdaki değişiklik burada görünmez.</p>
+      <p class="muted" style="margin-top:0;">Bu listeler cihazında saklanır, giriş gerekmez. Her satırın solundaki kutu işaretliyse ürün hediye listelerinde görünür; kutuyu kaldırırsan ürün gizlenir ama fiyatı burada durur, istediğin zaman tekrar işaretleyebilirsin. Değişiklikler sadece bu cihazda geçerlidir.</p>
     </div>
     <div class="card">
-      <h2>Ürün Listesi (Cam / Cihaz / Serbest)</h2>
+      <h2>Ürün Listesi</h2>
       <div id="urun-list"></div>
       <div class="add-form">
         <select id="new_urun_kat">
-          <option value="Cam">Cam</option>
+          <option value="Progressive Cam">Progressive Cam</option>
+          <option value="Stok Paket">Stok Paket</option>
           <option value="Cihaz">Cihaz</option>
           <option value="Serbest">Serbest</option>
         </select>
         <input type="text" id="new_urun_ad" placeholder="Ürün adı">
         <input type="number" id="new_urun_fiyat" placeholder="Birim fiyat (₺)">
+        <label class="chk"><input type="checkbox" id="new_urun_gor" checked> Hediye listesinde görünsün</label>
         <button class="btn" id="btn_add_urun">+ Ürün Ekle</button>
       </div>
     </div>
@@ -388,6 +412,7 @@
       <div class="add-form">
         <input type="text" id="new_makine_ad" placeholder="Makine adı">
         <input type="number" id="new_makine_fiyat" placeholder="Fiyat (₺)">
+        <label class="chk"><input type="checkbox" id="new_makine_gor" checked> Makine listesinde görünsün</label>
         <button class="btn" id="btn_add_makine">+ Makine Ekle</button>
       </div>
     </div>
@@ -397,25 +422,26 @@
 <script>
 let urunler = [];
 let makineler = [];
-const LS_URUN_KEY = "gia_urunler_v3";
-const LS_MAKINE_KEY = "gia_makineler_v1";
+const LS_URUN_KEY = "gia_urunler_v4";
+const LS_MAKINE_KEY = "gia_makineler_v2";
 
-// Kapsamlı varsayılan listeler - herkes ayni sabit listeyle basliyor,
-// giris/senkronizasyon gerekmiyor (cihazin kendi hafizasinda tutulur).
+// Kapsamlı varsayılan listeler - herkes aynı sabit listeyle başlıyor,
+// giriş/senkronizasyon gerekmiyor (cihazın kendi hafızasında tutulur).
+// gorunur:false -> hediye açılır listelerinde görünmez (Listeler'de durur).
 const DEFAULT_URUNLER = [
-  { kategori: "Cam", ad: "Hawk Vista", fiyat: 439 },
-  { kategori: "Cam", ad: "Premium 1.50 Beyaz", fiyat: 1333 },
-  { kategori: "Cam", ad: "Premium 1.50 Hybrid", fiyat: 1580 },
-  { kategori: "Cam", ad: "Clarity 1.50 Beyaz", fiyat: 1826 },
-  { kategori: "Cam", ad: "Clarity 1.50 Hybrid", fiyat: 1976 },
-  { kategori: "Cam", ad: "Fuji Life 1.50 Beyaz", fiyat: 2717 },
-  { kategori: "Cam", ad: "Fuji Life 1.50 NeoChromes", fiyat: 3861 },
-  { kategori: "Cam", ad: "Fuji Adaptive 1.50 Beyaz", fiyat: 2002 },
-  { kategori: "Cam", ad: "Fuji Adaptive 1.50 NeoChromes", fiyat: 3146 },
-  { kategori: "Cam", ad: "1.56 Hmc Paket", fiyat: 10725 },
-  { kategori: "Cam", ad: "1.56 Blue Paket", fiyat: 21780 },
-  { kategori: "Cam", ad: "Viola 1.56 Paket", fiyat: 45738 },
-  { kategori: "Cam", ad: "V-Shock Blue Paket", fiyat: 61251 },
+  { kategori: "Progressive Cam", ad: "Hawk Vista", fiyat: 439 },
+  { kategori: "Progressive Cam", ad: "Premium 1.50 Beyaz", fiyat: 1333 },
+  { kategori: "Progressive Cam", ad: "Premium 1.50 Hybrid", fiyat: 1580 },
+  { kategori: "Progressive Cam", ad: "Clarity 1.50 Beyaz", fiyat: 1826 },
+  { kategori: "Progressive Cam", ad: "Clarity 1.50 Hybrid", fiyat: 1976 },
+  { kategori: "Progressive Cam", ad: "Fuji Life 1.50 Beyaz", fiyat: 2717, gorunur: false },
+  { kategori: "Progressive Cam", ad: "Fuji Life 1.50 NeoChromes", fiyat: 3861, gorunur: false },
+  { kategori: "Progressive Cam", ad: "Fuji Adaptive 1.50 Beyaz", fiyat: 2002, gorunur: false },
+  { kategori: "Progressive Cam", ad: "Fuji Adaptive 1.50 NeoChromes", fiyat: 3146, gorunur: false },
+  { kategori: "Stok Paket", ad: "1.56 Hmc Paket", fiyat: 10725 },
+  { kategori: "Stok Paket", ad: "1.56 Blue Paket", fiyat: 21780 },
+  { kategori: "Stok Paket", ad: "Viola 1.56 Paket", fiyat: 45738 },
+  { kategori: "Stok Paket", ad: "V-Shock Blue Paket", fiyat: 61251 },
   { kategori: "Cihaz", ad: "iPhone 17 (256GB)", fiyat: 100000 },
   { kategori: "Cihaz", ad: "iPhone 18 Pro (256GB)", fiyat: 143000 },
   { kategori: "Cihaz", ad: "iPhone 18 Pro Max (256GB)", fiyat: 155000 },
@@ -531,42 +557,94 @@ function loadLists() {
   renderLists();
 }
 
-function renderDropdowns() {
-  const urunSelects = [
-    document.getElementById("u_urun1"), document.getElementById("u_urun2"), document.getElementById("u_urun3"),
-    document.getElementById("m_urun1"), document.getElementById("m_urun2"), document.getElementById("m_urun3"),
-  ];
-  urunSelects.forEach(sel => {
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">— Seçilmedi —</option>' +
-      urunler.map(p => `<option value="${p.id}">${p.ad} (${fmtTL(p.fiyat)})</option>`).join("");
-    sel.value = cur;
+const KAT_SIRA = ["Progressive Cam", "Stok Paket", "Cihaz", "Serbest"];
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function katIdx(k) {
+  const i = KAT_SIRA.indexOf(k);
+  return i === -1 ? KAT_SIRA.length : i;
+}
+
+function urunOptionsHTML() {
+  const vis = urunler.filter(p => p.gorunur !== false);
+  const kats = [];
+  vis.slice().sort((a, b) => katIdx(a.kategori) - katIdx(b.kategori)).forEach(p => {
+    if (!kats.includes(p.kategori)) kats.push(p.kategori);
   });
-  const mSel = document.getElementById("m_makine");
-  const curM = mSel.value;
-  mSel.innerHTML = '<option value="">— Seçilmedi —</option>' +
-    makineler.map(p => `<option value="${p.id}">${p.ad} (${fmtTL(p.fiyat)})</option>`).join("");
-  mSel.value = curM;
+  let h = '<option value="">— Seçilmedi —</option>';
+  kats.forEach(k => {
+    const items = vis.filter(p => p.kategori === k);
+    h += '<optgroup label="' + esc(k) + '">' +
+      items.map(p => `<option value="${p.id}">${esc(p.ad)} (${fmtTL(p.fiyat)})</option>`).join("") +
+      '</optgroup>';
+  });
+  return h;
+}
+
+function makineOptionsHTML() {
+  const vis = makineler.filter(p => p.gorunur !== false);
+  return '<option value="">— Seçilmedi —</option>' +
+    vis.map(p => `<option value="${p.id}">${esc(p.ad)} (${fmtTL(p.fiyat)})</option>`).join("");
+}
+
+function fillSelect(sel, html) {
+  const cur = sel.value;
+  sel.innerHTML = html;
+  sel.value = cur;
+  if (sel.value !== cur) sel.value = "";   // gizlenen/silinen ürün seçiliyse sıfırla
+}
+
+function renderDropdowns() {
+  const uHtml = urunOptionsHTML();
+  ["u_urun1", "u_urun2", "u_urun3", "m_urun1", "m_urun2", "m_urun3"].forEach(id => {
+    fillSelect(document.getElementById(id), uHtml);
+  });
+  fillSelect(document.getElementById("m_makine"), makineOptionsHTML());
 }
 
 function renderLists() {
   const ul = document.getElementById("urun-list");
-  ul.innerHTML = urunler.length ? urunler.map(p => `
-    <div class="list-row">
-      <span class="cat">${p.kategori}</span>
-      <span class="name">${p.ad}</span>
+  const sorted = urunler.map((p, i) => ({ p, i }))
+    .sort((a, b) => katIdx(a.p.kategori) - katIdx(b.p.kategori) || a.i - b.i)
+    .map(x => x.p);
+  let lastKat = null;
+  ul.innerHTML = sorted.length ? sorted.map(p => {
+    const head = p.kategori !== lastKat ? `<div class="grp-head">${esc(p.kategori)}</div>` : "";
+    lastKat = p.kategori;
+    return head + `
+    <div class="list-row${p.gorunur === false ? " gizli" : ""}">
+      <input type="checkbox" data-vis-urun="${p.id}" ${p.gorunur === false ? "" : "checked"} aria-label="Hediye listesinde görünsün">
+      <span class="name">${esc(p.ad)}</span>
       <span class="price">${fmtTL(p.fiyat)}</span>
       <button class="del-btn" data-del-urun="${p.id}">✕</button>
-    </div>`).join("") : '<div class="empty-msg">Henüz ürün eklenmemiş</div>';
+    </div>`;
+  }).join("") : '<div class="empty-msg">Henüz ürün eklenmemiş</div>';
 
   const ml = document.getElementById("makine-list");
   ml.innerHTML = makineler.length ? makineler.map(p => `
-    <div class="list-row">
-      <span class="name">${p.ad}</span>
+    <div class="list-row${p.gorunur === false ? " gizli" : ""}">
+      <input type="checkbox" data-vis-makine="${p.id}" ${p.gorunur === false ? "" : "checked"} aria-label="Makine listesinde görünsün">
+      <span class="name">${esc(p.ad)}</span>
       <span class="price">${fmtTL(p.fiyat)}</span>
       <button class="del-btn" data-del-makine="${p.id}">✕</button>
     </div>`).join("") : '<div class="empty-msg">Henüz makine eklenmemiş</div>';
 
+  ul.querySelectorAll("[data-vis-urun]").forEach(cb => {
+    cb.onchange = () => {
+      const p = urunler.find(x => x.id === cb.getAttribute("data-vis-urun"));
+      if (p) { p.gorunur = cb.checked; saveToStorage(LS_URUN_KEY, urunler); }
+      renderDropdowns(); renderLists(); calcUrun(); calcMakine();
+    };
+  });
+  ml.querySelectorAll("[data-vis-makine]").forEach(cb => {
+    cb.onchange = () => {
+      const p = makineler.find(x => x.id === cb.getAttribute("data-vis-makine"));
+      if (p) { p.gorunur = cb.checked; saveToStorage(LS_MAKINE_KEY, makineler); }
+      renderDropdowns(); renderLists(); calcMakine();
+    };
+  });
   ul.querySelectorAll("[data-del-urun]").forEach(btn => {
     btn.onclick = () => {
       const id = btn.getAttribute("data-del-urun");
@@ -589,24 +667,26 @@ document.getElementById("btn_add_urun").onclick = () => {
   const kategori = document.getElementById("new_urun_kat").value;
   const ad = document.getElementById("new_urun_ad").value.trim();
   const fiyat = parseFloat(document.getElementById("new_urun_fiyat").value);
+  const gorunur = document.getElementById("new_urun_gor").checked;
   if (!ad || isNaN(fiyat)) return;
-  const item = { id: uid(), kategori, ad, fiyat };
-  urunler.push(item);
+  urunler.push({ id: uid(), kategori, ad, fiyat, gorunur });
   saveToStorage(LS_URUN_KEY, urunler);
   document.getElementById("new_urun_ad").value = "";
   document.getElementById("new_urun_fiyat").value = "";
+  document.getElementById("new_urun_gor").checked = true;
   renderDropdowns(); renderLists();
 };
 
 document.getElementById("btn_add_makine").onclick = () => {
   const ad = document.getElementById("new_makine_ad").value.trim();
   const fiyat = parseFloat(document.getElementById("new_makine_fiyat").value);
+  const gorunur = document.getElementById("new_makine_gor").checked;
   if (!ad || isNaN(fiyat)) return;
-  const item = { id: uid(), ad, fiyat };
-  makineler.push(item);
+  makineler.push({ id: uid(), ad, fiyat, gorunur });
   saveToStorage(LS_MAKINE_KEY, makineler);
   document.getElementById("new_makine_ad").value = "";
   document.getElementById("new_makine_fiyat").value = "";
+  document.getElementById("new_makine_gor").checked = true;
   renderDropdowns(); renderLists();
 };
 
@@ -706,6 +786,37 @@ attachThousandInput("m_puan", calcMakine);
   document.getElementById(id).addEventListener("input", calcMakine);
   document.getElementById(id).addEventListener("change", calcMakine);
 });
+
+// ---------------- Hediye ürün 2 / 3: "+ Hediye ürün ekle" ----------------
+function setupSlots(prefix, calcFn) {
+  const addBtn = document.getElementById(prefix + "_add_slot");
+  const slot = n => document.getElementById(`${prefix}_slot${n}`);
+  const isVisible = n => slot(n).style.display !== "none";
+
+  function refresh() {
+    addBtn.style.display = (isVisible(2) && isVisible(3)) ? "none" : "";
+    const last = isVisible(3) ? 3 : (isVisible(2) ? 2 : 0);
+    [2, 3].forEach(n => {
+      slot(n).querySelector(".slot-remove").style.display = (n === last) ? "" : "none";
+    });
+  }
+  addBtn.onclick = () => {
+    slot(isVisible(2) ? 3 : 2).style.display = "";
+    refresh();
+  };
+  [2, 3].forEach(n => {
+    slot(n).querySelector(".slot-remove").onclick = () => {
+      document.getElementById(`${prefix}_urun${n}`).value = "";
+      document.getElementById(`${prefix}_adet${n}`).value = "";
+      slot(n).style.display = "none";
+      refresh();
+      calcFn();
+    };
+  });
+  refresh();
+}
+setupSlots("u", calcUrun);
+setupSlots("m", calcMakine);
 
 loadLists();
 </script>
